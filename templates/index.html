@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>Reminder App</title>
+
+      </head>
+      <body>
+        <font size="+3" ><center>Welcome John!</font><br><br>
+          <form action="{{ url_for('updateNumber') }}" method="post">
+            <label for="phno">Update Phone number</label><br><br>
+            <input type="tel" name="phno" placeholder="+XXXXXXXXXXXX" pattern="^\+[1-9]{1}[0-9]{3,14}$"><br><br>
+            <input type="submit">
+          </form> 
+        <font size = "+2" id='embed'>0</font> hrs since app is running.
+        </center>
+      </body>
+      <script>
+        function updateContact(contact)
+        {
+
+        }
+        var x = document.getElementById("embed");
+        if(x.innerHTML=="0")
+        {
+          fetch("/hoursRunning")
+          .then((resp) => resp.json())
+          .then( function(hours) {
+            x.innerHTML = hours["hours"];
+          });
+        }
+        setInterval( function() {
+          fetch("/hoursRunning")
+          .then((resp) => resp.json())
+          .then( function(hours) {
+            x.innerHTML = hours["hours"];
+          });
+          data = new Date().getHours();
+          if (data > 6 && data < 20)
+          {
+            fetch("/sendMessage", {
+            method: 'POST',
+            body: JSON.stringify(data)
+            });
+          }
+        }, 86400000);
+        </script>
+</html>
