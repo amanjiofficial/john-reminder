@@ -4,7 +4,7 @@ Reminder App for John!!!
 
 # Features
 
-* Web-based application where John can set his phone number
+* Flask Web application where John can set his phone number
 * Send an SMS every one hour except at night
 * Resends an SMS if it fails, but retry no more than 5 times.
 * The web application logs all the failed messages and tell John how many hours the application has been running.
